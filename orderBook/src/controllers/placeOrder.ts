@@ -84,15 +84,15 @@ export const placeOrder = (req: Request, res: Response) => {
               orderBook.asks.splice(orderBook.asks.indexOf(o), 1);
             }
           }
-          if (quantity !== 0) {
-            orderBook.bids.push({
-              price,
-              quantity: o.quantity - quantity,
-              side,
-              orderId,
-            });
-          }
         });
+        if (quantity !== 0) {
+          orderBook.bids.push({
+            price,
+            quantity: quantity - executedQuantity,
+            side,
+            orderId,
+          });
+        }
       } else {
         orderBook.bids.forEach((o) => {
           if (o.price >= price) {
@@ -110,15 +110,15 @@ export const placeOrder = (req: Request, res: Response) => {
               orderBook.bids.splice(orderBook.bids.indexOf(o), 1);
             }
           }
-          if (quantity !== 0) {
-            orderBook.asks.push({
-              price,
-              quantity: quantity - executedQuantity,
-              side,
-              orderId,
-            });
-          }
         });
+        if (quantity !== 0) {
+          orderBook.asks.push({
+            price,
+            quantity: quantity - executedQuantity,
+            side,
+            orderId,
+          });
+        }
       }
       return {
         status: "accepted",

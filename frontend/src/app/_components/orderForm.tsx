@@ -35,7 +35,7 @@ const OrderForm = () => {
   };
 
   return (
-    <div className="max-w-md mx-auto p-4 bg-white shadow-xl rounded-lg mt-10">
+    <div className="w-full p-4 bg-white shadow-xl rounded-lg mt-10">
       <h2 className="text-2xl font-bold mb-4">Place Order</h2>
       <form onSubmit={handleSubmit} className="space-y-4">
         <div className="flex space-x-4">

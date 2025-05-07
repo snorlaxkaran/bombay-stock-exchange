@@ -1,1 +1,1 @@
-{"root":["./src/index.ts","./src/config/index.ts","./src/controllers/placeorder.ts","./src/routes/index.ts","./src/routes/order.routes.ts","./src/types/index.ts","./src/types/orderbook.ts"],"version":"5.8.2"}
+{"root":["./src/index.ts","./src/config/index.ts","./src/controllers/orderbook.ts","./src/controllers/placeorder.ts","./src/routes/index.ts","./src/routes/order.routes.ts","./src/types/index.ts","./src/types/orderbook.ts"],"version":"5.8.2"}
