@@ -1,18 +1,25 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 
 type orderSide = "buy" | "sell";
 type orderKind = "ioc" | "limit";
+
+type OrderResult = {
+  orderId: string;
+  status: string;
+  [key: string]: any; // You can fine-tune this further
+};
 
 const OrderForm = () => {
   const [side, setSide] = useState<orderSide>("buy");
   const [type, setType] = useState<orderKind>("limit");
   const [price, setPrice] = useState("");
   const [quantity, setQuantity] = useState("");
-  const [result, setResult] = useState<any>(null);
+  const [result, setResult] = useState<OrderResult | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const [currentPrice, setCurrentPrice] = useState<number | null>(null);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -34,8 +41,28 @@ const OrderForm = () => {
     }
   };
 
+  useEffect(() => {
+    const getCurrentPrice = async () => {
+      try {
+        const res = await axios.get("http://localhost:3001/api/v1/order/price");
+        if (res.data !== currentPrice) {
+          setCurrentPrice(res.data);
+        }
+      } catch (error: any) {
+        setError(error?.response?.data?.message || "Error placing order");
+      }
+    };
+
+    getCurrentPrice();
+
+    const interval = setInterval(getCurrentPrice, 1); // refresh every 2 sec
+
+    return () => clearInterval(interval);
+  }, []);
+
   return (
     <div className="w-full p-4 bg-white shadow-xl rounded-lg mt-10">
+      <p>{currentPrice}</p>
       <h2 className="text-2xl font-bold mb-4">Place Order</h2>
       <form onSubmit={handleSubmit} className="space-y-4">
         <div className="flex space-x-4">
