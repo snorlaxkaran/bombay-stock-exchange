@@ -36,8 +36,8 @@ const OrderForm = () => {
         quantity: parseFloat(quantity),
       });
       setResult(res.data);
-    } catch (error: any) {
-      setError(error?.response?.data?.message || "Error placing order");
+    } catch (error: unknown) {
+      setError("Unknown error");
     }
   };
 
@@ -48,8 +48,8 @@ const OrderForm = () => {
         if (res.data !== currentPrice) {
           setCurrentPrice(res.data);
         }
-      } catch (error: any) {
-        setError(error?.response?.data?.message || "Error placing order");
+      } catch (error: unknown) {
+        setError("Unknown error");
       }
     };
 
